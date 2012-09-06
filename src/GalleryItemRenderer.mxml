@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mx:Canvas height="120" width="160" xmlns:mx="http://www.adobe.com/2006/mxml">
+    <mx:Image id="img_Thumb" source="{thumbSource}" percentHeight="100" percentWidth="100" />
+    <mx:Script>
+        <![CDATA[
+        import flash.accessibility.*;
+        import flash.debugger.*;
+        import flash.display.*;
+        import flash.errors.*;
+        import flash.events.*;
+        import flash.external.*;
+        import flash.filters.*;
+        import flash.geom.*;
+        import flash.media.*;
+        import flash.net.*;
+        import flash.printing.*;
+        import flash.profiler.*;
+        import flash.system.*;
+        import flash.text.*;
+        import flash.ui.*;
+        import flash.utils.*;
+        import flash.xml.*;
+        import mx.core.*;
+        import mx.events.*;
+        import mx.styles.*;
+        
+        [Bindable]
+        public var thumbSource:String;
+
+        [Bindable]
+        public var imageSource:String;
+
+        [Bindable]
+        public var imageDescription:String;
+        ]]>
+        
+    </mx:Script>
+</mx:Canvas>

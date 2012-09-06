@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"
+				xmlns:dougmccune="com.dougmccune.containers.*"
+				xmlns:efflex="org.efflex.viewStackEffects.*"
+				width="760" height="260" backgroundColor="#FFFFFF"
+				backgroundGradientAlphas="[1.0, 1.0]" backgroundGradientColors="[#FFFFFF, #FFFFFF]"
+				creationComplete="application_creationCompleteHandler(event)" layout="absolute">
+	<mx:ViewStack id="vs_Header" left="220" 
+				  dropShadowEnabled="true" 
+				  dropShadowColor="#5a5a5a" 
+				  shadowDirection="left" shadowDistance="10" bottom="30" top="0" percentWidth="100" />
+	<mx:MenuBar id="mb_MainMenu" dataProvider="{menuXMLList}" itemClick="onMainMenu_ItemClick(event)" bottom="0" height="30" labelField="@label" useHandCursor="true" width="540" x="220" />
+	<mx:Image autoLoad="true" height="83" scaleContent="true" source="logo.swf" width="220" x="0" y="0" />
+	<mx:ComboBox id="cb_Language" change="language_changeHandler(event)" right="0" textAlign="center" bottom="4" alpha="0" dataProvider='["RU", "RO", "ENG"]' selectedIndex="0" visible="false"/>
+	<mx:Image id="imHouse" left="0" bottom="30" autoLoad="true" height="149" scaleContent="true" source="house.swf" width="220" />
+	<mx:Image right="0" top="0" source="ruukki.swf" />
+	<mx:Canvas bottom="0" left="0" backgroundColor="#212020" height="30" width="220">
+		<mx:Label id="_header_Label1" text="{pageTitleName}" 
+				  fontSize="11" color="#f5f5f5" verticalCenter="1" fontWeight="bold" textAlign="center" percentWidth="100" />
+	</mx:Canvas>
+	<mx:states>
+		<mx:Array>
+			<mx:State name="gallery">
+				<mx:overrides>
+					<mx:RemoveChild id="_header_RemoveChild1" target="{vs_Header}" />
+					<mx:AddChild position="firstChild">
+						<mx:targetFactory>
+							<dougmccune:CoverFlowContainer id="hl_Gallery" 
+														   selectedIndex="0" 
+														   reflectionEnabled="true" 
+														   percentWidth="100" 
+														   percentHeight="100" 
+														   horizontalGap="40" top="30" left="220" change="onGallery_ItemClick(event)" />
+						</mx:targetFactory>
+					</mx:AddChild>
+				</mx:overrides>
+			</mx:State>
+		</mx:Array>
+	</mx:states>
+	<efflex:Fade id="fade" duration="3000" />
+	<mx:HTTPService id="galleryXML" url='{"gallery/" + galleryGroupName + ".xml"}' resultFormat="e4x" 
+					fault="onGallery_Fault(event)" 
+					result="onGallery_Result(event)" />
+	<mx:XMLListCollection id="galleryXMLList" />
+	<mx:HTTPService id="headerXML" url="gallery/header.xml" resultFormat="e4x" fault="onHeader_Fault(event)" result="onHeader_Result(event)" />
+	<mx:XMLListCollection id="headerXMLList" />
+	<mx:HTTPService id="menuXML" 
+					url='{"menus/" + cb_Language.value.toString().toLowerCase() + ".xml"}' 
+					resultFormat="e4x" fault="onMainMenu_Fault(event)" result="onMainMenu_Result(event)" />
+	<mx:XMLListCollection id="menuXMLList" />
+	<mx:Style>
+		ComboBox
+		{
+			borderColor: #444444;
+			fillAlphas: 1, 1;
+			color: #f5f5f5;
+			cornerRadius: 0;
+			fillColors: #444444, #191919;
+			textRollOverColor: #f5f5f5;
+			fontSize: 11;
+			themeColor: #444444;
+			dropdownStyleName: "comboBoxDropdown";
+			textSelectedColor: #f5f5f5;
+		}
+		MenuBar
+		{
+			borderColor: #212020;
+			selectionColor: #070707;
+			color: #f5f5f5;
+			fillAlphas: 1, 1;
+			fontWeight: "bold";
+			fillColors: #212020, #212020;
+			rollOverColor: #070707;
+			fontSize: 11;
+			themeColor: #212020;
+			backgroundColor: #444444;
+		}
+		Menu
+		{
+			borderColor: #444444;
+			selectionColor: #5c5e5f;
+			fontWeight: "bold";
+			rollOverColor: #d9dadb;
+			selectionDisabledColor: #5c5e5f;
+			textRollOverColor: #2b333c;
+			backgroundAlpha: 0.5;
+			fontSize: 10;
+			borderStyle: "solid";
+			color: #f0f0f0;
+			cornerRadius: 0;
+			backgroundColor: #444444;
+			textSelectedColor: #f0f0f0;
+		}
+		.comboBoxDropdown
+		{
+			borderColor: #444444;
+			selectionColor: #5c5e5f;
+			fontWeight: "bold";
+			rollOverColor: #d9dadb;
+			selectionDisabledColor: #5c5e5f;
+			textRollOverColor: #2b333c;
+			backgroundAlpha: 0.5;
+			fontSize: 10;
+			borderStyle: "solid";
+			verticalScrollBarStyleName: "listBaseVerticalScrollBar";
+			color: #f0f0f0;
+			cornerRadius: 0;
+			backgroundColor: #444444;
+			textSelectedColor: #f0f0f0;
+		}
+	</mx:Style>
+	<mx:Script>
+		<![CDATA[
+			import mx.events.FlexEvent;
+			import mx.events.IndexChangedEvent;
+			import mx.events.ListEvent;
+			import mx.events.MenuEvent;
+			import mx.events.StateChangeEvent;
+			import mx.rpc.events.FaultEvent;
+			import mx.rpc.events.ResultEvent;
+			
+			[Bindable]
+			internal var pageTitleName:String;
+			
+			[Bindable]
+			internal var galleryGroupName:String="architecture";
+			
+			internal var tim:flash.utils.Timer;
+			
+			internal var count:*=0;
+			
+			protected function application_creationCompleteHandler(event:FlexEvent):void
+			{
+				menuXML.send();
+				headerXML.send();
+			}
+			
+			protected function language_changeHandler(event:ListEvent):void
+			{
+				menuXML.send();
+			}
+			
+			internal function currentStateChangeHandler(event:StateChangeEvent):void
+			{
+				if (event.newState != "gallery") 
+				{
+					tim.start();
+				}
+				else 
+				{
+					tim.stop();
+				}
+				return;
+			}
+			
+			internal function onMainMenu_Result(event:ResultEvent):void
+			{
+				menuXMLList.source = menuXML.lastResult.menuitem;
+				loadHtmlPage("pages/" + cb_Language.value.toString().toLowerCase() + "/home0.html");
+				pageTitleName = "Новости";
+				this.currentState = "";
+			}
+			
+			internal function onGallery_Fault(event:FaultEvent):void
+			{
+				mx.controls.Alert.show("Cannot load gallery xml");
+			}
+			
+			internal function loadHtmlPage(name:String):void
+			{
+				var movieClipHouse:MovieClip = this.imHouse.content as MovieClip;
+				
+				if (flash.external.ExternalInterface.available) 
+				{
+					flash.external.ExternalInterface.call("LoadPage", name, "contentPageHtml");
+					movieClipHouse.house.gotoAndPlay("s1");
+				}
+			}
+			
+			internal function loadImagePage(name:String, description:String):void
+			{
+				if (flash.external.ExternalInterface.available) 
+				{
+					flash.external.ExternalInterface.call("LoadImage", name, "contentPageHtml", description);
+				}
+			}
+			
+			internal function onGallery_ItemClick(event:IndexChangedEvent):void
+			{
+				if (galleryGroupName != "video") 
+				{
+					loadImagePage((hl_Gallery.selectedChild as GalleryItemRenderer).imageSource, (hl_Gallery.selectedChild as GalleryItemRenderer).imageDescription);
+				}
+				else 
+				{
+					loadVideoPage((hl_Gallery.selectedChild as GalleryItemRenderer).imageSource, (hl_Gallery.selectedChild as GalleryItemRenderer).imageDescription);
+				}
+				return;
+			}
+			
+			internal function onHeader_Fault(arg1:mx.rpc.events.FaultEvent):void
+			{
+				mx.controls.Alert.show("Cannot load header xml");
+				return;
+			}
+			
+			internal function loadVideoPage(arg1:String, arg2:String):void
+			{
+				var name:String;
+				var description:String;
+				
+				var loc1:*;
+				name = arg1;
+				description = arg2;
+				try 
+				{
+					if (flash.external.ExternalInterface.available) 
+					{
+						flash.external.ExternalInterface.call("LoadVideo", name, "contentPageHtml", description);
+					}
+				}
+				catch (e:Error)
+				{
+				};
+				return;
+			}
+			
+			internal function onMainMenu_Fault(arg1:mx.rpc.events.FaultEvent):void
+			{
+				mx.controls.Alert.show("Cannot load Main menu");
+				return;
+			}
+			
+			internal function onGallery_Result(event:ResultEvent):void
+			{
+				var loc3:*=null;
+				galleryXMLList.source = galleryXML.lastResult.image;
+				if (hl_Gallery.numChildren != 0) 
+				{
+					hl_Gallery.removeAllChildren();
+				}
+				
+				var loc1:*=0;
+				while (loc1 < galleryXMLList.length) 
+				{
+					(loc3 = new GalleryItemRenderer()).thumbSource = galleryXMLList.getItemAt(loc1).@thumbnailImage;
+					loc3.imageSource = galleryXMLList.getItemAt(loc1).@fullImage;
+					loc3.imageDescription = galleryXMLList.getItemAt(loc1).@title;
+					hl_Gallery.addChild(loc3);
+					++loc1;
+				}
+				
+				var loc2:*=hl_Gallery.numChildren / 2;
+				hl_Gallery.selectedIndex = loc2;
+				
+				if (galleryGroupName != "video") 
+				{
+					loadImagePage((hl_Gallery.getChildAt(loc2) as GalleryItemRenderer).imageSource, (hl_Gallery.getChildAt(loc2) as GalleryItemRenderer).imageDescription);
+				}
+				else 
+				{
+					loadVideoPage((hl_Gallery.getChildAt(loc2) as GalleryItemRenderer).imageSource, (hl_Gallery.getChildAt(loc2) as GalleryItemRenderer).imageDescription);
+				}
+				return;
+			}
+			
+			internal function onMainMenu_ItemClick(event:MenuEvent):void
+			{
+				var loc1:*= null;
+				
+				if (mb_MainMenu.selectedIndex == 3) 
+				{
+					this.currentState = "gallery";
+					galleryGroupName = event.item.@name;
+					galleryXML.send();
+					pageTitleName = mb_MainMenu.dataProvider[mb_MainMenu.selectedIndex].@label + ": " + event.label;
+				}
+				else 
+				{
+					this.currentState = "";
+					loc1 = "pages/" + cb_Language.value.toString().toLowerCase() + "/" + 
+						mb_MainMenu.dataProvider[mb_MainMenu.selectedIndex].@name + event.item.@linkname + ".html";
+					loadHtmlPage(loc1);
+					pageTitleName = event.label;
+				}
+				return;
+			}
+			
+			internal function onTimer(event:TimerEvent):void
+			{
+				if (this.currentState != "gallery") 
+				{
+					if (vs_Header.numChildren > count) 
+					{
+						vs_Header.selectedIndex = count;
+						count++;
+					}
+					else 
+					{
+						count = 0;
+					}
+				}
+				return;
+			}
+			
+			internal function onHeader_Result(event:ResultEvent):void
+			{
+				headerXMLList.source = headerXML.lastResult.image;
+				var loc1:*=0;
+				while (loc1 < headerXMLList.length) 
+				{
+					var loc2:HeaderItemRenderer = new HeaderItemRenderer();
+					loc2.label = headerXMLList.getItemAt(loc1).@title;
+					loc2.imageSource = headerXMLList.getItemAt(loc1).@fullImage;
+					loc2.imageDescription = headerXMLList.getItemAt(loc1).@description;
+					loc2.setStyle("hideEffect", "fade");
+					loc2.setStyle("showEffect", "fade");
+					vs_Header.addChild(loc2);
+					++loc1;
+				}
+				tim = new flash.utils.Timer(10000);
+				tim.addEventListener(flash.events.TimerEvent.TIMER, onTimer);
+				tim.start();
+				this.addEventListener(mx.events.StateChangeEvent.CURRENT_STATE_CHANGE, currentStateChangeHandler);
+				return;
+			}
+		]]>
+	</mx:Script>
+</mx:Application>

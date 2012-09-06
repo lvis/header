@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<FLVCoreCuePoints version="1">
+<menuitem label="Главная" name="home">
+	 	<menuitem label="Главная" 	linkname="0"/>
+	<menuitem label="Полезная информация" 		linkname="1"/>
+	
+</menuitem>
+<menuitem label="Продукция" name="products">
+	<menuitem label="Кровельные материалы" selected="true" linkname="0">
+		<menuitem label="Металлочерепица" linkname="0_0"/>
+		<menuitem label="Профнастил"     linkname="0_1"/>
+		<menuitem label="Водосточные системы"     linkname="0_2"/>
+		<menuitem label="Комплектующие кровли"     linkname="0_3"/>
+	 
+	</menuitem>
+	<menuitem label="Фасадные элементы" 	 linkname="1">
+		<menuitem label="Металлосайдинг" linkname="6"/>
+		<menuitem label="Вагонка металлическая"     linkname="9"/>
+	</menuitem>	
+	<menuitem label="Воздуховоды" 	linkname="8"/>
+	<menuitem label="Мансардные окна" 	linkname="3"/>
+	<menuitem label="Сборные Дома" 			linkname="7"/>
+    </menuitem>
+	
+<menuitem label="Услуги"  name="service"> 
+   <menuitem label="Проектные работы" linkname="0"/>	
+   <menuitem label="Стройтельство и монтаж" linkname="1"/>
+   </menuitem>
+   
+<menuitem label="Галерея" name="gallery">
+<menuitem label="Фото" linkname="0">
+		   <menuitem label="Готовые объекты" 		  name="products" 	  linkname="0_0"/>
+   	        <menuitem label="Проектные работы" 		  name="design" 	  linkname="0_1"/>
+		 </menuitem>
+<menuitem label="Видео" name="video" linkname="1">
+   </menuitem>
+</menuitem>
+<menuitem label="Контакы" name="contacts">
+	 <menuitem label="Наши адреса" linkname="0"/>
+</menuitem>
+</FLVCoreCuePoints>   

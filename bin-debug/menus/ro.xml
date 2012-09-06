@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<FLVCoreCuePoints version="1">
+<menuitem label="Informaţii" name="home">
+	<menuitem label="Noutăţi" selected="true" linkname="0"/>
+	<menuitem label="Despre companie" 	linkname="1"/>
+	<menuitem label="Parteneri" 		linkname="2"/>
+	<menuitem label="Informaţii" 		linkname="3"/>
+</menuitem>
+<menuitem label="Produse" name="products">
+	<menuitem label="Ţigla metalică" selected="true" linkname="0">
+		<menuitem label="Adi Studio" linkname="0_0"/>
+		<menuitem label="Ruukki"     linkname="0_1"/>
+	</menuitem>
+	<menuitem label="Tabla cutată" 	 linkname="1">
+		<menuitem label="Adi Studio" linkname="1_0"/>
+		<menuitem label="Ruukki"     linkname="1_1"/>
+	</menuitem>
+	<menuitem label="Sisteme pluviale" 	linkname="2">
+		<menuitem label="Adi Studio" 		linkname="2_0"/>
+		<menuitem label="Ruukki"     		linkname="2_1"/>
+	</menuitem>
+	<menuitem label="Ferestre de mansardă" 	linkname="3">
+		<menuitem label="Fakro" 		linkname="3_0"/>
+		<menuitem label="Velux"     	linkname="3_1"/>
+	</menuitem>
+	<menuitem label="Pompe termice" 			linkname="4">
+		<menuitem label="Sisteme geotermale VDE" 		linkname="4_0"/>
+		<menuitem label="Pompe termice OCTOPUS" 	linkname="4_1"/>
+	</menuitem>
+	<menuitem label="Accesorii acoperiş"  				linkname="5">
+		<menuitem label="Vată minerală" 			linkname="5_0"/>
+		<menuitem label="Peliculă anticondens" 	linkname="5_1"/>
+		<menuitem label="Elemente acoperiş" 			linkname="5_2"/>
+		<menuitem label="Accesorii" 		linkname="5_3"/>
+	</menuitem>
+	<menuitem label="Profile pentru rigips"  linkname="5_6"/>
+	<menuitem label="Saune şi seminee" 			linkname="5_7"/>
+	<menuitem label="Tubulatură circulară" 				linkname="5_8"/>
+</menuitem>
+<menuitem label="Servicii"  name="services">
+   <menuitem label="Producerea" linkname="0">
+		   <menuitem label="Ţiglă metalică" linkname="0_0"/>
+		   <menuitem label="Tablă cutată" linkname="0_1"/>
+		   <menuitem label="Profile pentru ipsos" linkname="0_2"/>
+		   <menuitem label="Tubulatură circulară" linkname="0_3"/>
+   </menuitem>
+   <menuitem label="Construcţie şi montarea" linkname="1"/>
+   <menuitem label="Lucrări de roiectare" linkname="2">
+		   <menuitem label="Proiectare architecturală" linkname="2_0"/>
+		   <menuitem label="Design interior" linkname="2_1"/>
+		   <menuitem label="Machetare" linkname="2_2"/>
+   </menuitem>
+   <menuitem label="Instalare pompelor termice" linkname="3"/>
+   <menuitem label="Tăierea metal cu plasmă" linkname="4"/>
+</menuitem>
+<menuitem label="Fotografii" name="gallery">
+   <menuitem label="Fotogalerie" linkname="0">
+		   <menuitem label="Obiecte făcute" 		  name="products" 	  linkname="0_0"/>
+   	       <menuitem label="Architectura" 	  name="architecture" linkname="0_1"/>
+		   <menuitem label="Design interior" name="design" 	  linkname="0_2"/>
+		   <menuitem label="Machete"			  name="maket" 		  linkname="0_3"/>
+   </menuitem>   
+</menuitem>
+<menuitem label="Contacte" name="contacts">
+	<menuitem label="Chişinău" linkname="0"/>
+	<menuitem label="Cahul" linkname="1"/>
+</menuitem>
+</FLVCoreCuePoints>   

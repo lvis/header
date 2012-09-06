@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gallery>
+    <image title="Трёхмерная презентация VILAGIO"
+        thumbnailImage="gallery/video/s1.gif"
+        fullImage="gallery/video/b1.flv" />
+    <image title="C2"
+            thumbnailImage="gallery/video/s2.gif"
+            fullImage="gallery/video/b2.flv" />
+    <image title="C3"
+            thumbnailImage="gallery/video/s3.gif"
+            fullImage="gallery/video/b3.flv" />
+</gallery>

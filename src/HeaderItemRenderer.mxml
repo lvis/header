@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml"
+		   percentHeight="100" percentWidth="100">
+    <mx:Image id="img_Thumb" percentHeight="100" percentWidth="100" source="{imageSource}"/>
+    <mx:TextArea id="_HeaderItemRenderer_TextArea1" left="5" bottom="5" width="230" height="50"
+				 backgroundAlpha="0.75" backgroundColor="#444444" borderStyle="solid"
+				 color="#ffffff" creationCompleteEffect="{wipeOut}" editable="false" fontSize="12"
+				 showEffect="{wipeOut}" text="{imageDescription}" wordWrap="true"/>
+    <mx:WipeDown id="wipeIn" duration="1000"/>
+    <mx:WipeRight id="wipeOut" duration="1000"/>
+    <mx:Script>
+        <![CDATA[
+        import flash.accessibility.*;
+        import flash.debugger.*;
+        import flash.display.*;
+        import flash.errors.*;
+        import flash.events.*;
+        import flash.external.*;
+        import flash.filters.*;
+        import flash.geom.*;
+        import flash.media.*;
+        import flash.net.*;
+        import flash.printing.*;
+        import flash.profiler.*;
+        import flash.system.*;
+        import flash.text.*;
+        import flash.ui.*;
+        import flash.utils.*;
+        import flash.xml.*;
+        import mx.core.*;
+        import mx.events.*;
+        import mx.styles.*;
+        
+        [Bindable]
+        public var imageDescription:String;
+
+        [Bindable]
+        public var imageSource:String;
+        ]]>
+        
+    </mx:Script>
+</mx:Canvas>
